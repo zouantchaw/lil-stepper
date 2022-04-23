@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { StepperContext } from './context/StepperContext';
 import logo from './logo.svg';
 import Stepper from './components/Stepper';
 import StepperControl from './components/StepperControl';
@@ -13,6 +14,12 @@ function App() {
   // state to keep track of the current step
   const [currentStep, setCurrentStep] = useState(1);
 
+  // state to keep track of user data
+  const [userData, setUserData] = useState('');
+
+  // state to keep track of final data
+  const [finalData, setFinalData] = useState([]);
+
   // array of steps
   const steps = [
     "Account Information",
@@ -20,7 +27,7 @@ function App() {
     "Complete",
   ];
 
-  // function to display current step
+  // function to display current step content
   const displayStep = (step) => {
     switch(step) {
       case 1:
@@ -51,7 +58,21 @@ function App() {
           steps={steps}
           currentStep={currentStep} 
         />
+
+      {/* Display Components */}
+      <div className='my-10 p-10'>
+        <StepperContext.Provider value={{
+          userData,
+          setUserData,
+          finalData,
+          setFinalData
+         }}>  
+          {displayStep(currentStep)}
+        </StepperContext.Provider>
       </div>
+
+      </div>
+
 
       {/* Navigation controls */}
       <StepperControl 
